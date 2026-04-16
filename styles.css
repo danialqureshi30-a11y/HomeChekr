@@ -1,0 +1,45 @@
+:root {
+  --text: #1c2a2f;
+  --muted: #5f6f73;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  color: var(--text);
+  background: linear-gradient(180deg, #f4eee4 0%, #f7f2ea 60%, #efe4d2 100%);
+}
+
+.notice {
+  width: min(720px, 100%);
+  padding: 32px;
+  border-radius: 24px;
+  background: rgba(255, 252, 247, 0.92);
+  box-shadow: 0 24px 60px rgba(48, 39, 24, 0.12);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+p {
+  color: var(--muted);
+  line-height: 1.6;
+}

@@ -1,0 +1,16 @@
+{
+  "name": "homechekr-mvp",
+  "version": "1.0.0",
+  "description": "Node-backed MVP for analyzing whether a home is overpriced, underpriced, or accurately priced against comparable homes.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "real-estate",
+    "comparables",
+    "valuation",
+    "node"
+  ],
+  "license": "UNLICENSED"
+}

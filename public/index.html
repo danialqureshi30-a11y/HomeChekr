@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomeChekr MVP</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">HomeChekr MVP</p>
+          <h1>Find out whether a home is overpriced, underpriced, or right on target.</h1>
+          <p class="hero-text">
+            Enter the asking price and specs, and HomeChekr will compare it against nearby
+            live sale listings from an approved real-estate data API.
+          </p>
+          <div class="hero-badges">
+            <span>Server-backed analysis</span>
+            <span>Live API comparables</span>
+            <span>Condition adjustments</span>
+          </div>
+        </div>
+        <aside class="hero-panel">
+          <p class="panel-label">What this Node app does</p>
+          <ul>
+            <li>Collects the home details you requested</li>
+            <li>Posts them to a backend valuation API</li>
+            <li>Evaluates nearby comparable homes and returns a pricing recommendation</li>
+          </ul>
+          <p class="panel-note">
+            This MVP now runs through Node on the server side and calls a live approved data API
+            for comparable homes. Set your API key before running the app.
+          </p>
+        </aside>
+      </header>
+
+      <main class="content-grid">
+        <section class="card form-card">
+          <div class="section-heading">
+            <p class="kicker">Home Intake</p>
+            <h2>Enter the property details</h2>
+          </div>
+
+          <form id="home-form" class="home-form">
+            <label>
+              <span>Price of the home</span>
+              <input id="price" name="price" type="number" step="any" placeholder="425000" />
+            </label>
+
+            <div class="row two-up">
+              <label>
+                <span>City</span>
+                <input id="city" name="city" type="text" placeholder="Charlotte" />
+              </label>
+              <label>
+                <span>ZIP Code</span>
+                <input id="zip" name="zip" type="text" inputmode="numeric" placeholder="28277" />
+              </label>
+            </div>
+
+            <div class="row two-up">
+              <label>
+                <span>Bedrooms</span>
+                <input id="bedrooms" name="bedrooms" type="number" step="1" placeholder="4" />
+              </label>
+              <label>
+                <span>Bathrooms</span>
+                <input id="bathrooms" name="bathrooms" type="number" step="0.5" inputmode="decimal" placeholder="2.5" />
+              </label>
+            </div>
+
+            <div class="row two-up">
+              <label>
+                <span>Home size (sq ft)</span>
+                <input id="squareFootage" name="squareFootage" type="number" step="any" placeholder="2050" />
+              </label>
+              <label>
+                <span>Money needed for repairs</span>
+                <input id="repairsCost" name="repairsCost" type="number" step="any" placeholder="25000" />
+              </label>
+            </div>
+
+            <label>
+              <span>Optional notes</span>
+              <input id="notes" name="notes" type="text" placeholder="Any extra context about the home" />
+            </label>
+
+            <div class="actions">
+              <button type="submit">Run HomeChekr Analysis</button>
+              <button type="button" id="demo-fill" class="ghost-button">Load demo example</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="card result-card">
+          <div class="section-heading">
+            <p class="kicker">Valuation</p>
+            <h2>Pricing analysis</h2>
+          </div>
+
+          <div id="empty-state" class="empty-state">
+            <p>Submit a home to see its live comparable homes, provider coverage, and recommendation.</p>
+          </div>
+
+          <div id="results" class="results hidden">
+            <div class="result-banner">
+              <div>
+                <p class="result-label">Recommendation</p>
+                <h3 id="recommendation-title">Accurately priced</h3>
+              </div>
+              <span id="recommendation-pill" class="pill neutral">Awaiting analysis</span>
+            </div>
+
+            <div class="metric-grid">
+              <article class="metric">
+                <p>Estimated fair value</p>
+                <strong id="fair-value">$0</strong>
+              </article>
+              <article class="metric">
+                <p>Price difference</p>
+                <strong id="price-delta">$0</strong>
+              </article>
+              <article class="metric">
+                <p>Confidence</p>
+                <strong id="confidence">0%</strong>
+              </article>
+            </div>
+
+            <div class="analysis-block">
+              <h4>Why HomeChekr reached this result</h4>
+              <p id="analysis-summary"></p>
+            </div>
+
+            <div class="analysis-block">
+              <h4>Provider coverage</h4>
+              <div id="provider-list" class="adjustment-list"></div>
+            </div>
+
+            <div class="analysis-block">
+              <h4>Repair adjustment</h4>
+              <div id="adjustment-list" class="adjustment-list"></div>
+            </div>
+
+            <div class="analysis-block">
+              <div class="subheading-row">
+                <h4>Comparable homes</h4>
+                <span id="comps-count" class="muted-chip">0 listings</span>
+              </div>
+              <div id="comps-list" class="comps-list"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
