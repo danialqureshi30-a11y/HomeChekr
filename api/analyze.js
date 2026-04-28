@@ -16,12 +16,21 @@ module.exports = async function handler(req, res) {
     res.setHeader("Content-Type", "application/json; charset=utf-8");
     res.end(JSON.stringify(analysis));
   } catch (error) {
-    res.statusCode = 500;
+    const message = error instanceof Error ? error.message : "Unknown error";
+    const statusCode = isClientError(message) ? 400 : 500;
+
+    if (statusCode === 500) {
+      console.error("Analyze API failure:", error);
+    } else {
+      console.warn("Analyze API validation error:", message);
+    }
+
+    res.statusCode = statusCode;
     res.setHeader("Content-Type", "application/json; charset=utf-8");
     res.end(
       JSON.stringify({
-        error: "Unexpected server error",
-        details: error instanceof Error ? error.message : "Unknown error"
+        error: statusCode === 400 ? "Invalid request" : "Unexpected server error",
+        details: message
       })
     );
   }
@@ -45,4 +54,16 @@ function readJsonBody(req) {
 
     req.on("error", reject);
   });
+}
+
+function isClientError(message) {
+  return [
+    "Price must be greater than 0.",
+    "City is required.",
+    "ZIP code must be 5 digits.",
+    "Bedroom and bathroom counts must be valid values.",
+    "Home square footage is required.",
+    "Repairs cost must be zero or greater.",
+    "Request body must be valid JSON."
+  ].includes(message);
 }
